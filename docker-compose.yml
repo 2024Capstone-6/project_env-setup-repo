@@ -1,0 +1,42 @@
+version: '3.8'
+services:
+  backend:
+    build:
+      context: ../project_nest-deployment-repo # 백엔드 소스 위치
+    container_name: backend
+    ports:
+      - '3001:3000' # 백엔드 포트
+    environment:
+      - DATABASE_HOST=db
+      - DATABASE_PORT=5432
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: ../project_react-deployment-repo # 프론트엔드 소스 위치
+    container_name: frontend
+    ports:
+      - '8088:8080' # 프론트엔드 포트
+    environment:
+      - REACT_APP_API_URL=http://backend:3000 # 백엔드 API URL
+    networks:
+      - app-network
+
+  db:
+    image: postgres:latest
+    container_name: db
+    environment:
+      POSTGRES_DB: 2024_2-final-assignment
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 1234
+    volumes:
+      - ./db_backup:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
