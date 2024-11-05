@@ -39,7 +39,7 @@
      - **프론트엔드**: `project_react-deployment-repo`의 `Dockerfile`을 빌드하고, React 앱을 `localhost:8088`에서 실행
      - **데이터베이스**: PostgreSQL 컨테이너가 `db_backup` 폴더의 초기화 SQL 파일을 사용해 데이터베이스를 설정
 
-## 서비스 확인 및 테스트 🧪
+## 🧪 서비스 확인 및 테스트 
 
 1. **실행 중인 컨테이너 확인**:
    ```bash
