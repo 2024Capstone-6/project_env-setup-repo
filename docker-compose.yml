@@ -8,7 +8,7 @@ services:
       - '3001:3000' # 백엔드 포트
     environment:
       - DATABASE_HOST=db
-      - DATABASE_PORT=5432
+      - DATABASE_PORT=3306 # MySQL 포트로 변경
     depends_on:
       - db
     networks:
@@ -19,21 +19,22 @@ services:
       context: ../project_react-deployment-repo # 프론트엔드 소스 위치
     container_name: frontend
     ports:
-      - '8088:8080' # 프론트엔드 포트
+      - '3000:3000' # 프론트엔드 포트
     environment:
-      - REACT_APP_API_URL=http://backend:3000 # 백엔드 API URL
+      - REACT_APP_API_URL=http://backend:3001 # 백엔드 API URL
     networks:
       - app-network
 
   db:
-    image: postgres:latest
+    image: mysql:latest
     container_name: db
     environment:
-      POSTGRES_DB: 2024_2-final-assignment
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: 1234
+      MYSQL_DATABASE: 2024_2-final-assignment
+      MYSQL_ROOT_PASSWORD: 1234
     volumes:
-      - ./db_backup:/var/lib/postgresql/data
+      - ./db_backup:/var/lib/mysql
+    ports:
+      - '3307:3306'
     networks:
       - app-network
 
