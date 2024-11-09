@@ -22,6 +22,8 @@ services:
       - '3000:3000' # 프론트엔드 포트
     environment:
       - REACT_APP_API_URL=http://backend:3001 # 백엔드 API URL
+    volumes:
+      - ../project_react-deployment-repo:/app # 로컬 소스를 컨테이너에 마운트
     networks:
       - app-network
 
@@ -41,3 +43,4 @@ services:
 networks:
   app-network:
     driver: bridge
+# rm -rf ./db_backup/* -> db_backup 폴더 내부 파일 삭제
