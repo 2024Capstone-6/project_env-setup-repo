@@ -2,10 +2,10 @@ services:
   db:
     image: mysql:8.1.0
     environment:
-      - DATABASE_HOST=${DATABASE_HOST}
-      - DATABASE_NAME=${DATABASE_NAME}
-      - DATABASE_USER=${DATABASE_USER}
-      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - MYSQL_HOST=${DATABASE_HOST}
+      - MYSQL_DATABASE=${DATABASE_NAME}
+      - MYSQL_USER=${DATABASE_USER}
+      - MYSQL_PASSWORD=${DATABASE_PASSWORD}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - TZ=${TZ}
     volumes:
@@ -22,7 +22,7 @@ services:
     ports:
       - '3001:3000' # 백엔드 포트
     environment:
-      - MYSQL_SERVER=db
+      - DATABASE_HOST=db
       - DATABASE_USER=${DATABASE_USER}
       - DATABASE_PASSWORD=${DATABASE_PASSWORD}
       - DATABASE_NAME=${DATABASE_NAME}
@@ -32,7 +32,7 @@ services:
     volumes:
       - ../project_nest-deployment-repo:/app # 로컬 소스를 컨테이너에 마운트
     working_dir: /app
-    command: 
+    command: >
       bash -c "npm install && npm run start:dev"
     networks:
       - app-network
@@ -42,15 +42,15 @@ services:
   frontend:
     image: node:22
     ports:
-      - '3000:3000' # 프론트엔드 포트
+      - '5173:5173' # 프론트엔드 포트
     environment:
       - CHOKIDAR_USEPOLLING=true
     tty: true
     volumes:
       - ../project_react-deployment-repo:/app # 로컬 소스를 컨테이너에 마운트
     working_dir: /app
-    command: 
-      bash -c "npm install && npm run start"
+    command: >
+      bash -c "npm install && npm run dev"
     networks:
       - app-network
 
