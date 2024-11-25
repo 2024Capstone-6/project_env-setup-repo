@@ -18,9 +18,9 @@ services:
       - app-network
 
   backend:
-    image: node:22
+    image: node:20-buster
     ports:
-      - '3001:3000' # 백엔드 포트
+      - '3001:3000'
     environment:
       - DATABASE_HOST=db
       - DATABASE_PORT=3306
@@ -31,9 +31,9 @@ services:
       - CHOKIDAR_USEPOLLING=true
     tty: true
     volumes:
-      - ../project_nest-deployment-repo:/app # 로컬 소스를 컨테이너에 마운트
+      - ../project_nest-deployment-repo:/app 
     working_dir: /app
-    command: >
+    command: 
       bash -c "npm install && npm run start:dev"
     networks:
       - app-network
@@ -41,16 +41,16 @@ services:
       - db
 
   frontend:
-    image: node:22
+    image: node:20-buster
     ports:
-      - '5173:5173' # 프론트엔드 포트
+      - '5173:5173' 
     environment:
       - CHOKIDAR_USEPOLLING=true
     tty: true
     volumes:
-      - ../project_react-deployment-repo:/app # 로컬 소스를 컨테이너에 마운트
+      - ../project_react-deployment-repo:/app 
     working_dir: /app
-    command: >
+    command: 
       bash -c "npm install && npm run dev"
     networks:
       - app-network
