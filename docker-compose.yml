@@ -29,6 +29,7 @@ services:
       - DATABASE_NAME=${DATABASE_NAME}
       - TZ=${TZ}
       - CHOKIDAR_USEPOLLING=true
+      - JWT_SECRET=${JWT_SECRET}
     tty: true
     volumes:
       - ../project_nest-deployment-repo:/app # 로컬 소스를 컨테이너에 마운트
